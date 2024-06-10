@@ -17,11 +17,26 @@ import { isSystemCollection } from '@directus/system-data';
 export const useCollectionsStore = defineStore('collectionsStore', () => {
 	const collections = ref<Collection[]>([]);
 
-	const visibleCollections = computed(() =>
-		collections.value
-			.filter(({ collection }) => isSystemCollection(collection) === false)
-			.filter((collection) => collection.meta && collection.meta?.hidden !== true),
-	);
+	const visibleCollections = computed(() => {
+		const userStore = useUserStore(); // Assuming useUserStore is a function that returns a store object
+
+		// Ensure 'collections' is a reactive property available in the scope
+		if(userStore.currentUser?.role?.id == 'b3ab233d-75bd-4477-8520-e4c3a4681bea'){
+			return collections.value
+				.filter(({ collection }) => !collection.startsWith('directus_'))
+				.filter(({ meta }) => !(meta && meta.hidden === true))
+				.filter(({ collection }) => collection === 'Incidents');
+		} else if(userStore.currentUser?.role?.id == 'cd62eb09-a31f-4659-92e0-cbfbff9574d8' || userStore.currentUser?.role?.id == 'f0fa8dc0-6962-4d03-886d-650eafe194ed'){
+			return collections.value
+				.filter(({ collection }) => !collection.startsWith('directus_'))
+				.filter(({ meta }) => !(meta && meta.hidden === true))
+				.filter(({ meta }) => !(meta && meta.group && meta.group === 'Lists'));
+		} else {
+			return collections.value
+				.filter(({ collection }) => !collection.startsWith('directus_'))
+				.filter(({ meta }) => !(meta && meta.hidden === true));
+		}
+	});
 
 	const allCollections = computed(() =>
 		collections.value.filter(({ collection }) => isSystemCollection(collection) === false),
