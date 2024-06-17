@@ -20,9 +20,10 @@ export const useCollectionsStore = defineStore('collectionsStore', () => {
 
 	const visibleCollections = computed(() => {
 		const userStore = useUserStore(); // Assuming useUserStore is a function that returns a store object
-
+		console.log('userStore.currentUser', userStore.currentUser);
 		// Ensure 'collections' is a reactive property available in the scope
 		if(userStore.currentUser?.role?.id == 'b3ab233d-75bd-4477-8520-e4c3a4681bea'){
+			console.log('collections', collections);
 			return collections.value
 				//.filter(({ collection }) => !collection.startsWith('directus_'))
 				//.filter(({ meta }) => !(meta && meta.hidden === true))
