@@ -12,6 +12,7 @@ import { isEqual, isNil, omit, orderBy } from 'lodash';
 import { defineStore } from 'pinia';
 import { computed, ref } from 'vue';
 import { useRelationsStore } from './relations';
+import { useUserStore } from './user';
 import { isSystemCollection } from '@directus/system-data';
 
 export const useCollectionsStore = defineStore('collectionsStore', () => {
