@@ -22,6 +22,9 @@ import { useRouter } from 'vue-router';
 import ContentNavigation from '../components/navigation.vue';
 import ContentNotFound from './not-found.vue';
 import { isSystemCollection } from '@directus/system-data';
+import { useUserStore } from '@/stores/user';
+
+
 
 type Item = {
 	[field: string]: any;
@@ -47,6 +50,8 @@ const { info: currentCollection } = useCollection(collection);
 const { addNewLink, currentCollectionLink } = useLinks();
 const { breadcrumb } = useBreadcrumb();
 
+const userStore = useUserStore();
+
 const {
 	layout,
 	layoutOptions,
@@ -62,7 +67,7 @@ const {
 	bookmarkIsMine,
 	refreshInterval,
 	busy: bookmarkSaving,
-	clearLocalSave,
+	clearLocalSave
 } = usePreset(collection, bookmarkID);
 
 const { layoutWrapper } = useLayout(layout);
@@ -316,7 +321,7 @@ function clearFilters() {
 			</template>
 
 			<template #title-outer:append>
-				<div class="bookmark-controls">
+				<div class="bookmark-controls" v-if="!userStore.isVendor">
 					<bookmark-add
 						v-if="!bookmark"
 						v-model="bookmarkDialogActive"

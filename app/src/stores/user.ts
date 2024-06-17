@@ -29,6 +29,15 @@ export const useUserStore = defineStore({
 		isAdmin(): boolean {
 			return this.currentUser?.role?.admin_access === true || false;
 		},
+		isVendor(): boolean {
+			return this.currentUser?.role?.id == 'b3ab233d-75bd-4477-8520-e4c3a4681bea';
+		},
+		isManager(): boolean {
+			return this.currentUser?.role?.id == 'f0fa8dc0-6962-4d03-886d-650eafe194ed';
+		},
+		isDirector(): boolean {
+			return this.currentUser?.role?.id == 'cd62eb09-a31f-4659-92e0-cbfbff9574d8';
+		},
 	},
 	actions: {
 		async hydrate() {

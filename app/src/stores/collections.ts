@@ -43,12 +43,12 @@ export const useCollectionsStore = defineStore('collectionsStore', () => {
 	const allCollections = computed(() => {
 		const userStore = useUserStore(); // Assuming useUserStore is a function that returns a store object
 		//collections.value.filter(({ collection }) => isSystemCollection(collection) === false),
-		if(userStore.currentUser?.role?.id == 'b3ab233d-75bd-4477-8520-e4c3a4681bea'){
+		if(userStore.isVendor){
 			return collections.value
 				.filter(({ collection }) => isSystemCollection(collection) === false)
 				.filter((collection) => collection.meta && collection.meta?.hidden !== true)
 				.filter(({ collection }) => collection === 'Incidents');
-		} else if(userStore.currentUser?.role?.id == 'cd62eb09-a31f-4659-92e0-cbfbff9574d8' || userStore.currentUser?.role?.id == 'f0fa8dc0-6962-4d03-886d-650eafe194ed'){
+		} else if(userStore.isManager || userStore.isDirector){
 			return collections.value
 				.filter(({ collection }) => isSystemCollection(collection) === false)
 				.filter((collection) => collection.meta && collection.meta?.hidden !== true)
