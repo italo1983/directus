@@ -124,6 +124,9 @@ async function onSubmit() {
 				{{ t('forgot_password') }}
 			</router-link>
 		</div>
+		<div class="buttons">
+			<a href="https://enroll.flsbltr.com/" target="_blank">Register</a>
+		</div>
 	</form>
 </template>
 
